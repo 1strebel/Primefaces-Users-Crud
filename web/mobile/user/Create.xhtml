@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:pm="http://primefaces.org/mobile">
+
+    <pm:page id="UserCreatePage" lazy="true">
+        <pm:header title="#{myBundle.CreateUserTitle}">
+            <h:form>
+                <p:commandButton styleClass="ui-btn-left ui-btn-inline" value="#{myBundle.Cancel}" icon="ui-icon-arrow-l" action="#{mobilePageController.navigateBackInHistory('pm:UserListPage')}"/>
+            </h:form>
+        </pm:header>
+
+        <pm:content>
+
+            <h:form id="UserCreateForm">
+
+                <h:panelGroup id="display" rendered="#{userController.selected != null}">
+                    <p:outputPanel>
+
+                        <pm:field>
+                            <p:outputLabel value="#{myBundle.CreateUserLabel_name}" for="name" />
+                            <p:inputText id="name" value="#{userController.selected.name}" title="#{myBundle.CreateUserTitle_name}" required="true" requiredMessage="#{myBundle.CreateUserRequiredMessage_name}" size="25" maxlength="25"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{myBundle.CreateUserLabel_age}" for="age" />
+                            <p:inputText id="age" value="#{userController.selected.age}" title="#{myBundle.CreateUserTitle_age}"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{myBundle.CreateUserLabel_isAdmin}" for="isAdmin" />
+                            <p:selectBooleanCheckbox id="isAdmin" value="#{userController.selected.isAdmin}" />
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{myBundle.CreateUserLabel_createdDate}" for="createdDate" />
+                            <p:calendar id="createdDate" pattern="MM/dd/yyyy HH:mm:ss" value="#{userController.selected.createdDate}" title="#{myBundle.CreateUserTitle_createdDate}" required="true" requiredMessage="#{myBundle.CreateUserRequiredMessage_createdDate}" showOn="button"/>
+                        </pm:field>
+                    </p:outputPanel>
+                    <p:commandButton actionListener="#{userController.saveNew}" value="#{myBundle.Save}" update="display,:UserListPage:UserListForm:datalist,:growl" action="#{mobilePageController.navigateWithHistory('pm:UserListPage')}"/>
+
+                </h:panelGroup>
+
+            </h:form>
+
+        </pm:content>
+
+    </pm:page>
+
+</ui:composition>
